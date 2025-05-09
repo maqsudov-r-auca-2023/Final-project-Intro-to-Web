@@ -45,30 +45,18 @@ Authentication: Session-based with hashed passwords (Werkzeug)
 
 📦 Setup Instructions
 Clone the repo
-
-bash
-Copy
-Edit
 git clone https://github.com/maqsudov-r-auca-2023/Final-project-Intro-to-Web.git
 cd Final-project-Intro-to-Web
-Create virtual environment
 
-bash
-Copy
-Edit
+Create virtual environment
 python -m venv venv
 source venv/bin/activate  # or venv\Scripts\activate on Windows
-Install dependencies
 
-bash
-Copy
-Edit
+Install dependencies
 pip install -r requirements.txt
 Run the app
 
-bash
-Copy
-Edit
+
 python app.py
 Visit in browser
 Open http://127.0.0.1:5000
@@ -84,9 +72,7 @@ Chart.js (via CDN)
 
 You can install all Python dependencies via:
 
-bash
-Copy
-Edit
+
 pip install flask flask_sqlalchemy werkzeug
 ✨ Bonus Features
 Dark/light theme toggle ☀️🌙
