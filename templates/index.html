@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="home fade-in">
+    <h1>🧠 Welcome to MindSpace</h1>
+    <p class="tagline">
+        “Your emotions are valid. Let’s track them together.” 🌱
+    </p>
+
+    <!-- ✨ Daily Quote -->
+    <div class="quote-box">
+        {% set quotes = [
+        "Every day may not be good, but there's something good in every day.",
+        "Feelings are just visitors — let them come and go.",
+        "Tracking your mood is the first step to understanding your mind.",
+        "You are not your thoughts. You are the observer.",
+        "Mental clarity begins with emotional honesty."
+        ] %}
+        <p>💬 {{ quotes | random }}</p>
+    </div>
+
+    <img class="home-gif" src="https://media.giphy.com/media/xT9IgG50Fb7Mi0prBC/giphy.gif" alt="Calm cloud">
+
+    <!-- ✨ Navigation Buttons -->
+    <div class="nav-buttons">
+        <a href="{{ url_for('new_entry') }}">
+            <button class="btn purple">➕ Log Your Mood</button>
+        </a>
+        <a href="{{ url_for('dashboard') }}">
+            <button class="btn blue">📘 View Dashboard</button>
+        </a>
+        <a href="{{ url_for('mood_chart') }}">
+            <button class="btn pink">📊 Mood Chart</button>
+        </a>
+    </div>
+</div>
+{% endblock %}

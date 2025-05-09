@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container fade-in">
+    <h2 class="page-heading">✏️ Edit Mood Entry</h2>
+
+    <form method="POST" class="mood-form">
+        <label for="date">📅 Date</label>
+        <input type="date" id="date" name="date" value="{{ entry.date }}" required>
+
+        <label for="mood">🧠 Mood</label>
+        <input type="text" id="mood" name="mood" value="{{ entry.mood }}" required>
+
+        <label for="intensity">📈 Mood Level (1 = worst, 5 = best)</label>
+        <select id="intensity" name="intensity" required>
+            <option value="1" {% if entry.intensity== 1 %}selected{% endif %}>1 - 😢 Very Bad</option>
+            <option value="2" {% if entry.intensity== 2 %}selected{% endif %}>2 - 🙁 Bad</option>
+            <option value="3" {% if entry.intensity== 3 %}selected{% endif %}>3 - 😐 Neutral</option>
+            <option value="4" {% if entry.intensity== 4 %}selected{% endif %}>4 - 🙂 Good</option>
+            <option value="5" {% if entry.intensity== 5 %}selected{% endif %}>5 - 😄 Great</option>
+        </select>
+
+        <label for="tags">🏷️ Tags</label>
+        <input type="text" id="tags" name="tags" value="{{ entry.tags }}" placeholder="#work #sleep #anxiety">
+
+        <label for="notes">📝 Notes</label>
+        <textarea id="notes" name="notes" placeholder="Write anything...">{{ entry.notes }}</textarea>
+
+        <button type="submit" class="submit-btn">💾 Update Entry</button>
+    </form>
+</div>
+{% endblock %}

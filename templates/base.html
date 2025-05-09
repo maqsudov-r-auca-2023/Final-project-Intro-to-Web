@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MindSpace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text: #222;
+            --nav-bg: #f4f4f4;
+            --card-bg: #f9f9f9;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --bg: #121212;
+            --text: #eaeaea;
+            --nav-bg: #1e1e1e;
+            --card-bg: #2c2c2c;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            transition: var(--transition);
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        nav {
+            background-color: var(--nav-bg);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #ccc;
+            transition: var(--transition);
+        }
+
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--text);
+            transition: var(--transition);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <div>
+        <a href="{{ url_for('index') }}">🏠 Home</a>
+        <a href="{{ url_for('new_entry') }}">➕ New Entry</a>
+        <a href="{{ url_for('dashboard') }}">📘 Dashboard</a>
+        <a href="{{ url_for('mood_chart') }}">📊 Mood Chart</a>
+    </div>
+    <div style="display: flex; align-items: center;">
+        {% if current_user %}
+        <span style="margin-right: 10px;">👤 {{ current_user.username }}</span>
+        <a href="{{ url_for('logout') }}" style="margin-right: 15px; color: red;">🚪 Logout</a>
+        {% else %}
+        <a href="{{ url_for('login') }}">🔐 Login</a>
+        <a href="{{ url_for('register') }}" style="margin-left: 10px;">🆕 Register</a>
+        {% endif %}
+        <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
+</nav>
+
+
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+<div style="
+            background-color: #dff0d8;
+            border: 1px solid #d6e9c6;
+            padding: 10px 15px;
+            margin: 20px;
+            border-radius: 8px;
+            color: #3c763d;
+            font-weight: bold;">
+    {% for message in messages %}
+    {{ message }}
+    {% endfor %}
+</div>
+{% endif %}
+{% endwith %}
+
+<div style="padding: 20px;">
+    {% block content %}
+    {% endblock %}
+</div>
+
+<script>
+    const root = document.documentElement;
+
+    function toggleTheme() {
+        const current = localStorage.getItem('theme') || 'light';
+        const next = current === 'light' ? 'dark' : 'light';
+        root.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    }
+
+    // Set theme on load
+    (function () {
+        const saved = localStorage.getItem('theme') || 'light';
+        root.setAttribute('data-theme', saved);
+    })();
+</script>
+</body>
+</html>

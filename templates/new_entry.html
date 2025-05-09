@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="form-container fade-in">
+    <h2 class="page-heading">➕ Log a Mood</h2>
+
+    <form method="POST" class="mood-form">
+        <label for="date">📅 Date</label>
+        <input type="date" id="date" name="date" required>
+
+        <label for="mood">🧠 Mood</label>
+        <input type="text" id="mood" name="mood" placeholder="Happy, Anxious, etc." required>
+
+        <label for="intensity">📈 Mood Level (1 = worst, 5 = best)</label>
+        <select id="intensity" name="intensity" required>
+            <option value="1">1 - 😢 Very Bad</option>
+            <option value="2">2 - 🙁 Bad</option>
+            <option value="3">3 - 😐 Neutral</option>
+            <option value="4">4 - 🙂 Good</option>
+            <option value="5">5 - 😄 Great</option>
+        </select>
+
+        <label for="tags">🏷️ Tags (optional)</label>
+        <input type="text" id="tags" name="tags" placeholder="#work #health">
+
+        <label for="notes">📝 Notes (optional)</label>
+        <textarea id="notes" name="notes" placeholder="Write anything..."></textarea>
+
+        <button type="submit" class="submit-btn">Save Entry</button>
+    </form>
+</div>
+{% endblock %}

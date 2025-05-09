@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="fade-in dashboard-container">
+    <h2 class="page-heading">📊 Mood Intensity Over Time</h2>
+
+    <div class="chart-box">
+        <canvas id="moodChart" height="300"></canvas>
+
+        <div class="chart-buttons">
+            <button onclick="downloadChart()">📥 Download Chart</button>
+            <a href="{{ url_for('export_csv') }}" download>📄 Export to CSV</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    const dates = {{ dates | tojson | safe }};
+    const moods = {{ moods | tojson | safe }};
+    const intensities = {{ intensities | tojson | safe }};
+
+    const ctx = document.getElementById('moodChart').getContext('2d');
+    const chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: dates,
+            datasets: [{
+                label: 'Mood Intensity (1 = worst, 5 = best)',
+                data: intensities,
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 2,
+                fill: true,
+                pointRadius: 6,
+                pointHoverRadius: 8,
+                tension: 0.3
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        label: function (context) {
+                            const i = context.dataIndex;
+                            return `Mood: ${moods[i]} | Intensity: ${context.raw}`;
+                        }
+                    }
+                },
+                title: {
+                    display: true,
+                    text: 'Mood Over Time'
+                }
+            },
+            scales: {
+                y: {
+                    min: 0,
+                    max: 5,
+                    ticks: {
+                        stepSize: 1
+                    },
+                    title: {
+                        display: true,
+                        text: 'Intensity'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                }
+            }
+        }
+    });
+
+    function downloadChart() {
+        const link = document.createElement('a');
+        link.download = 'mood_chart.png';
+        link.href = document.getElementById('moodChart').toDataURL('image/png');
+        link.click();
+    }
+</script>
+{% endblock %}
